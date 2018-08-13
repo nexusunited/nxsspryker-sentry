@@ -10,7 +10,7 @@ use Silex\ServiceProviderInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 
 /**
- * @method \NxsSpryker\Yves\Sentry\Business\SentryFactory getFactory()
+ * @method \NxsSpryker\Yves\Sentry\SentryFactory getFactory()
  */
 class SentryServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
