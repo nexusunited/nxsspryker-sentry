@@ -49,6 +49,6 @@ class SentryFactory extends AbstractFactory
      */
     public function getSentryClientPlugins(): array
     {
-        return $this->getProvidedDependency(SentryDependencyProvider::SENTRY_CLIENT);
+        return $this->getProvidedDependency(SentryDependencyProvider::SENTRY_CLIENT_PLUGINS);
     }
 }
