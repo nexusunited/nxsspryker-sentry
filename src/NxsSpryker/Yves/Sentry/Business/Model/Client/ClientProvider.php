@@ -34,6 +34,13 @@ class ClientProvider implements ClientProviderInterface
      */
     public function getClient(): \Raven_Client
     {
+        $this->processPlugins();
+
+        return $this->client;
+    }
+
+    protected function processPlugins(): void
+    {
         foreach ($this->clientPluginCollection as $plugin) {
             $this->client = $plugin->register($this->client);
         }
