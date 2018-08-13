@@ -41,7 +41,7 @@ class SentryFactory extends AbstractFactory
      */
     public function getSentryClient(): \Raven_Client
     {
-        return $this->getProvidedDependency(SentryDependenvyProvider::SENTRY_CLIENT);
+        return $this->getProvidedDependency(SentryDependencyProvider::SENTRY_CLIENT);
     }
 
     /**
@@ -49,6 +49,6 @@ class SentryFactory extends AbstractFactory
      */
     public function getSentryClientPlugins(): array
     {
-        return $this->getProvidedDependency(SentryDependenvyProvider::SENTRY_CLIENT);
+        return $this->getProvidedDependency(SentryDependencyProvider::SENTRY_CLIENT);
     }
 }

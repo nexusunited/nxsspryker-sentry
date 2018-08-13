@@ -11,7 +11,7 @@ use Spryker\Yves\Kernel\Container;
 /**
  * @method \NxsSpryker\Yves\Sentry\SentryConfig getConfig()
  */
-class SentryDependenvyProvider extends AbstractBundleDependencyProvider
+class SentryDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SENTRY_CLIENT         = 'sentry.raven.client';
     public const SENTRY_CLIENT_PLUGINS = 'sentry.client.plugins';
