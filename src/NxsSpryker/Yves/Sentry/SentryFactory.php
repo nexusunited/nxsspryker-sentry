@@ -1,15 +1,15 @@
 <?php
+declare(strict_types=1);
 
 
-namespace NxsSpryker\Yves\Sentry\Business;
+namespace NxsSpryker\Yves\Sentry;
 
 
 use NxsSpryker\Yves\Sentry\Business\Model\Client\ClientProvider;
 use NxsSpryker\Yves\Sentry\Business\Model\Client\ClientProviderInterface;
-use NxsSpryker\Yves\Sentry\SentryDependenvyProvider;
-use Spryker\Yves\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Yves\Kernel\AbstractFactory;
 
-class SentryBusinessFactory extends AbstractBusinessFactory
+class SentryFactory extends AbstractFactory
 {
 
     /**

@@ -1,35 +1,41 @@
 <?php
+declare(strict_types=1);
 
 
-namespace NxsSpryker\Shared\Sentry;
+namespace NxsSpryker\Yves\Sentry;
 
+use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Yves\Kernel\Container;
 
 
 /**
- * @method \NxsSpryker\Shared\Sentry\SentryConfig getConfig()
+ * @method \NxsSpryker\Yves\Sentry\SentryConfig getConfig()
  */
 class SentryDependenvyProvider extends AbstractBundleDependencyProvider
 {
-    public const SENTRY_CLIENT = 'sentry.raven.client';
+    public const SENTRY_CLIENT         = 'sentry.raven.client';
+    public const SENTRY_CLIENT_PLUGINS = 'sentry.client.plugins';
 
     /**
-     * @param \Spryker\Shared\Kernel\Container $container
+     * @param \Spryker\Yves\Kernel\Container $container
      *
-     * @return \Spryker\Shared\Kernel\Container
+     * @return \Spryker\Yves\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container)
+    public function provideDependencies(Container $container)
     {
         $container = $this->addSentryClient($container);
+        $container = $this->addSentryClientPlugins($container);
 
         return $container;
     }
 
+
     /**
-     * @param \Spryker\Shared\Kernel\Container $container
+     * @param \Spryker\Yves\Kernel\Container $container
      *
-     * @return \Spryker\Shared\Kernel\Container
+     * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addSentryClient(Container $container): \Spryker\Shared\Kernel\Container
+    protected function addSentryClient(Container $container): \Spryker\Yves\Kernel\Container
     {
         $container[self::SENTRY_CLIENT] = function (Container $container) {
             return new \Raven_Client($this->getConfig()->getClientUrl());
@@ -38,9 +44,22 @@ class SentryDependenvyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \NxsSpryker\Shared\Sentry\Dependency\Plugin\SentryClientPluginInterface[]
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
      */
-    protected function getSentryClientPlugins(): array
+    protected function addSentryClientPlugins(Container $container): \Spryker\Yves\Kernel\Container
+    {
+        $container[self::SENTRY_CLIENT_PLUGINS] = function (Container $container) {
+            return $this->getSentryClientPlugins($container);
+        };
+        return $container;
+    }
+
+    /**
+     * @return \NxsSpryker\Yves\Sentry\Dependency\Plugin\SentryClientPluginInterface[]
+     */
+    protected function getSentryClientPlugins(Container $container): array
     {
         return [];
     }

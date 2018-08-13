@@ -1,6 +1,7 @@
 <?php
+declare(strict_types=1);
 
-namespace NxsSpryker\Zed\Sentry\Business\Model\Client;
+namespace NxsSpryker\Yves\Sentry\Business\Model\Client;
 
 interface ClientProviderInterface
 {

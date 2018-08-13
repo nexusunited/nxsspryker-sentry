@@ -1,10 +1,11 @@
 <?php
+declare(strict_types=1);
 
 
-namespace NxsSpryker\Shared\Sentry;
+namespace NxsSpryker\Yves\Sentry;
 
 
-use Spryker\Shared\Kernel\AbstractBundleConfig;
+use Spryker\Yves\Kernel\AbstractBundleConfig;
 
 class SentryConfig extends AbstractBundleConfig
 {

@@ -1,7 +1,8 @@
 <?php
+declare(strict_types=1);
 
 
-namespace NxsSpryker\Shared\Sentry\Business\Model\Client;
+namespace NxsSpryker\Yves\Sentry\Business\Model\Client;
 
 
 class ClientProvider implements ClientProviderInterface

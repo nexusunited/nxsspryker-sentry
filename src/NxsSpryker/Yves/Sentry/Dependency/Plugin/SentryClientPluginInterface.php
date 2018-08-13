@@ -1,7 +1,8 @@
 <?php
+declare(strict_types=1);
 
 
-namespace NxsSpryker\Shared\Sentry\Dependency\Plugin;
+namespace NxsSpryker\Yves\Sentry\Dependency\Plugin;
 
 
 interface SentryClientPluginInterface

@@ -1,8 +1,5 @@
 namespace: NxsSprykerTest
 
-include:
-    - tests/NxsSprykerTest/Zed/Sentry
-
 paths:
     tests: tests
     support: .
@@ -10,21 +7,6 @@ paths:
     data: tests/_data
     envs: tests/_envs
 
-settings:
-    bootstrap: _bootstrap.php
-    suite_class: \PHPUnit_Framework_TestSuite
-    colors: true
-    memory_limit: 1024M
-    log: true
-
 coverage:
     enabled: true
     whitelist: { include: ['src/*'] }
-
-extensions:
-    enabled:
-        - Codeception\Extension\Phantoman
-
-    config:
-        Codeception\Extension\Phantoman:
-            suites: ['Presentation']
