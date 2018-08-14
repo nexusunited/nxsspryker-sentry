@@ -15,17 +15,15 @@ use Spryker\Service\Kernel\Container;
 class SentryDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SENTRY_CLIENT         = 'sentry.raven.client';
-    public const SENTRY_CLIENT_PLUGINS = 'sentry.client.plugins';
 
     /**
      * @param \Spryker\Service\Kernel\Container $container
      *
      * @return \Spryker\Service\Kernel\Container
      */
-    public function provideDependencies(Container $container)
+    public function provideServiceDependencies(Container $container)
     {
         $container = $this->addSentryClient($container);
-        $container = $this->addSentryClientPlugins($container);
 
         return $container;
     }
@@ -42,22 +40,10 @@ class SentryDependencyProvider extends AbstractBundleDependencyProvider
             return new SentryClient(
                 $this->getConfig()->getClientUrl(),
                 $this->getConfig()->getClientConfig(),
-                $this->getSentryClientPlugins()
+                $this->getSentryClientPlugins($container)
             );
         };
-        return $container;
-    }
 
-    /**
-     * @param \Spryker\Service\Kernel\Container $container
-     *
-     * @return \Spryker\Service\Kernel\Container
-     */
-    protected function addSentryClientPlugins(Container $container): \Spryker\Service\Kernel\Container
-    {
-        $container[self::SENTRY_CLIENT_PLUGINS] = function (Container $container) {
-            return $this->getSentryClientPlugins($container);
-        };
         return $container;
     }
 
