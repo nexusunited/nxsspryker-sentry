@@ -19,7 +19,7 @@
     "php": ">=7.1.0",
     "spryker/error-handler": "^2.1.0",
     "spryker/kernel": "^3.0.0",
-    "nxsspryker/error-handler": "^0.1.0",
+    "nxsspryker/error-handler": "^1.0.0",
     "sentry/sentry": "^1.9.0",
     "spryker/propel-orm": "^1.0.0"
   },
