@@ -18,6 +18,25 @@ class ErrorHandler extends AbstractPlugin implements NxsErrorHandlerPlugin
     private $oldErrorHandler;
 
     /**
+     * @var array
+     */
+    private $includeErrorTypes = [
+        E_ERROR,
+        E_WARNING,
+        E_PARSE,
+        E_NOTICE,
+        E_CORE_ERROR,
+        E_CORE_WARNING,
+        E_COMPILE_ERROR,
+        E_COMPILE_WARNING,
+        E_USER_ERROR,
+        E_USER_WARNING,
+        E_USER_NOTICE,
+        E_STRICT,
+        E_RECOVERABLE_ERROR
+    ];
+
+    /**
      * @param bool $isDebug
      */
     public function register(bool $isDebug): void
@@ -48,8 +67,10 @@ class ErrorHandler extends AbstractPlugin implements NxsErrorHandlerPlugin
         int $errline,
         array $errcontext
     ): bool {
-        $exception = new \ErrorException($errstr, 0, $errno, $errfile, $errline);
-        $this->getFactory()->getSentryClient()->captureException($exception);
+        if (in_array($errno, $this->includeErrorTypes)) {
+            $exception = new \ErrorException($errstr, 0, $errno, $errfile, $errline);
+            $this->getFactory()->getSentryClient()->captureException($exception);
+        }
 
         if ($this->oldErrorHandler) {
             return \call_user_func(
