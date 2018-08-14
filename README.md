@@ -10,7 +10,7 @@ Installation
 composer require nxsspryker/sentry
 ```
 
-Also you have to add \NxsSpryker\Yves\Sentry\Plugin\SentryServiceProvider to your ServiceProvider list from silex.
+You need to register the handler in the NxsErrorHandlerDependencyProvider.
 
 
 Configuration
