@@ -67,7 +67,7 @@ class ErrorHandler extends AbstractPlugin implements NxsErrorHandlerPlugin
         int $errline,
         array $errcontext
     ): bool {
-        if (in_array($errno, $this->includeErrorTypes)) {
+        if (\in_array($errno, $this->includeErrorTypes, true)) {
             $exception = new \ErrorException($errstr, 0, $errno, $errfile, $errline);
             $this->getFactory()->getSentryClient()->captureException($exception);
         }
