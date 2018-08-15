@@ -39,6 +39,13 @@ class ExceptionHandler extends AbstractPlugin implements NxsExceptionHandlerPlug
      */
     public function handleException(\Throwable $throwable): void
     {
+        if (
+            $throwable instanceof \ErrorException
+            && ($throwable->getSeverity() & $this->getConfig()->getErrorToLog()) === 0
+        ) {
+            return;
+        }
+
         $this->getService()->captureException(
             $throwable,
             [
@@ -49,7 +56,7 @@ class ExceptionHandler extends AbstractPlugin implements NxsExceptionHandlerPlug
             ]
         );
 
-        if ($this->oldExceptionHandler) {
+        if ($this->oldExceptionHandler && $this->getConfig()->isRunPreviousHandler()) {
             \call_user_func(
                 $this->oldExceptionHandler,
                 $throwable

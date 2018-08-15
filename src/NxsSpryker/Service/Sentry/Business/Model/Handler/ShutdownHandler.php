@@ -15,25 +15,6 @@ use Spryker\Service\Kernel\AbstractPlugin;
 class ShutdownHandler extends AbstractPlugin implements NxsExceptionHandlerPlugin
 {
     /**
-     * @var array
-     */
-    private $includeErrorTypes = [
-        E_ERROR,
-        E_WARNING,
-        E_PARSE,
-        E_NOTICE,
-        E_CORE_ERROR,
-        E_CORE_WARNING,
-        E_COMPILE_ERROR,
-        E_COMPILE_WARNING,
-        E_USER_ERROR,
-        E_USER_WARNING,
-        E_USER_NOTICE,
-        E_STRICT,
-        E_RECOVERABLE_ERROR
-    ];
-
-    /**
      * @param bool $isDebug
      */
     public function register(bool $isDebug): void
@@ -52,7 +33,7 @@ class ShutdownHandler extends AbstractPlugin implements NxsExceptionHandlerPlugi
     {
         $error = error_get_last();
 
-        if ($error === null || !\in_array($error['type'], $this->includeErrorTypes, true)) {
+        if ($error === null || ($error['type'] & $this->getConfig()->getErrorToLog()) !== 0) {
             return;
         }
 

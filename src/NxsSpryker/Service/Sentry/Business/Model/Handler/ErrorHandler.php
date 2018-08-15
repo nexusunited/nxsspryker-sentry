@@ -5,10 +5,12 @@ namespace NxsSpryker\Service\Sentry\Business\Model\Handler;
 
 
 use NxsSpryker\Service\NxsErrorHandler\Dependency\Plugin\NxsErrorHandlerPlugin;
+use NxsSpryker\Service\Sentry\SentryConfig;
 use Spryker\Service\Kernel\AbstractPlugin;
+use Spryker\Shared\Config\Config;
 
 /**
- * @method \NxsSpryker\Service\Sentry\SentryServiceFactory getFactory()
+ * @method \NxsSpryker\Service\Sentry\SentryConfig getConfig()
  * @method \NxsSpryker\Service\Sentry\SentryService getService()
  */
 class ErrorHandler extends AbstractPlugin implements NxsErrorHandlerPlugin
@@ -17,25 +19,6 @@ class ErrorHandler extends AbstractPlugin implements NxsErrorHandlerPlugin
      * @var mixed
      */
     private $oldErrorHandler;
-
-    /**
-     * @var array
-     */
-    private $includeErrorTypes = [
-        E_ERROR,
-        E_WARNING,
-        E_PARSE,
-        E_NOTICE,
-        E_CORE_ERROR,
-        E_CORE_WARNING,
-        E_COMPILE_ERROR,
-        E_COMPILE_WARNING,
-        E_USER_ERROR,
-        E_USER_WARNING,
-        E_USER_NOTICE,
-        E_STRICT,
-        E_RECOVERABLE_ERROR
-    ];
 
     /**
      * @param bool $isDebug
@@ -68,7 +51,7 @@ class ErrorHandler extends AbstractPlugin implements NxsErrorHandlerPlugin
         int $errline,
         array $errcontext
     ): bool {
-        if (\in_array($errno, $this->includeErrorTypes, true)) {
+        if (($errno & $this->getConfig()->getErrorToLog()) === 0) {
             $exception = new \ErrorException($errstr, 0, $errno, $errfile, $errline);
             $this->getService()->captureException(
                 $exception,
@@ -81,7 +64,7 @@ class ErrorHandler extends AbstractPlugin implements NxsErrorHandlerPlugin
             );
         }
 
-        if ($this->oldErrorHandler) {
+        if ($this->oldErrorHandler && $this->getConfig()->isRunPreviousHandler()) {
             return \call_user_func(
                 $this->oldErrorHandler,
                 $errno,
