@@ -65,7 +65,7 @@ class ErrorHandler extends AbstractPlugin implements NxsErrorHandlerPlugin
         }
 
         if ($this->oldErrorHandler && $this->getConfig()->isRunPreviousHandler()) {
-            return \call_user_func(
+            \call_user_func(
                 $this->oldErrorHandler,
                 $errno,
                 $errstr,
