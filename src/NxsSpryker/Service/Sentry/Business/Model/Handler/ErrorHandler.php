@@ -9,6 +9,7 @@ use Spryker\Service\Kernel\AbstractPlugin;
 
 /**
  * @method \NxsSpryker\Service\Sentry\SentryServiceFactory getFactory()
+ * @method \NxsSpryker\Service\Sentry\SentryService getService()
  */
 class ErrorHandler extends AbstractPlugin implements NxsErrorHandlerPlugin
 {
@@ -69,7 +70,15 @@ class ErrorHandler extends AbstractPlugin implements NxsErrorHandlerPlugin
     ): bool {
         if (\in_array($errno, $this->includeErrorTypes, true)) {
             $exception = new \ErrorException($errstr, 0, $errno, $errfile, $errline);
-            $this->getFactory()->getSentryClient()->captureException($exception);
+            $this->getService()->captureException(
+                $exception,
+                [
+                    'extra' =>
+                        [
+                            'handler' => __CLASS__
+                        ]
+                ]
+            );
         }
 
         if ($this->oldErrorHandler) {

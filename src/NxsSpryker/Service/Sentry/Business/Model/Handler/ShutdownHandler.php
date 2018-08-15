@@ -10,6 +10,7 @@ use Spryker\Service\Kernel\AbstractPlugin;
 
 /**
  * @method \NxsSpryker\Service\Sentry\SentryServiceFactory getFactory()
+ * @method \NxsSpryker\Service\Sentry\SentryService getService()
  */
 class ShutdownHandler extends AbstractPlugin implements NxsExceptionHandlerPlugin
 {
@@ -47,24 +48,11 @@ class ShutdownHandler extends AbstractPlugin implements NxsExceptionHandlerPlugi
         }
     }
 
-    /**
-     * @param int $errno
-     * @param string $errstr
-     * @param string $errfile
-     * @param int $errline
-     * @param array $errcontext
-     *
-     * @return bool
-     */
     public function handleShutdown(): void
     {
         $error = error_get_last();
 
-        if ($error === null) {
-            return;
-        }
-
-        if (!\in_array($error['type'], $this->includeErrorTypes, true)) {
+        if ($error === null || !\in_array($error['type'], $this->includeErrorTypes, true)) {
             return;
         }
 
@@ -76,7 +64,15 @@ class ShutdownHandler extends AbstractPlugin implements NxsExceptionHandlerPlugi
             @$error['line']
         );
 
-        $this->getFactory()->getSentryClient()->captureException($exception);
+        $this->getService()->captureException(
+            $exception,
+            [
+                'extra' =>
+                    [
+                        'handler' => __CLASS__
+                    ]
+            ]
+        );
     }
 
 }

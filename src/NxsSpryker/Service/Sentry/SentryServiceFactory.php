@@ -9,7 +9,7 @@ use NxsSpryker\Service\Sentry\Business\Model\Client\ClientProviderInterface;
 use Spryker\Service\Kernel\AbstractFactory;
 use Spryker\Service\Kernel\AbstractServiceFactory;
 
-class SentryServiceFactory extends AbstractServiceFactory
+class SentryServiceFactory extends AbstractServiceFactory implements SentryServiceFactoryInterface
 {
     /**
      * @return \Raven_Client

@@ -10,6 +10,7 @@ use Spryker\Service\Kernel\AbstractPlugin;
 
 /**
  * @method \NxsSpryker\Service\Sentry\SentryServiceFactory getFactory()
+ * @method \NxsSpryker\Service\Sentry\SentryService getService()
  */
 class ExceptionHandler extends AbstractPlugin implements NxsExceptionHandlerPlugin
 {
@@ -38,7 +39,15 @@ class ExceptionHandler extends AbstractPlugin implements NxsExceptionHandlerPlug
      */
     public function handleException(\Throwable $throwable): void
     {
-        $this->getFactory()->getSentryClient()->captureException($throwable);
+        $this->getService()->captureException(
+            $throwable,
+            [
+                'extra' =>
+                    [
+                        'handler' => __CLASS__
+                    ]
+            ]
+        );
 
         if ($this->oldExceptionHandler) {
             \call_user_func(
