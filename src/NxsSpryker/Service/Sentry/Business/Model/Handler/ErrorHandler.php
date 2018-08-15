@@ -74,6 +74,8 @@ class ErrorHandler extends AbstractPlugin implements NxsErrorHandlerPlugin
                 $errcontext
             );
         }
+
+        return true;
     }
 
 }
