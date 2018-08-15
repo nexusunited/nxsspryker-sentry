@@ -14,28 +14,25 @@ class SentryConfig extends AbstractBundleConfig
     public const URL_DOMAIN = 'sentry.url.domain';
     public const URL_PROJECT = 'sentry.url.project';
     public const CLIENT_CONFIG = 'sentry.client.config';
-    public const ERROR_TO_LOG = 'sentry.error.to.log';
-    public const RUN_PREVIOUR_HANDLER = 'sentry.run.previour.handler';
+    public const IGNORE_ERROR_TYPES = 'sentry.ignore.error.types';
+    public const RUN_PREVIOUS_HANDLER = 'sentry.run.previous.handler';
 
     /**
      * @return bool
      */
     public function isRunPreviousHandler(): bool
     {
-        return $this->get(self::RUN_PREVIOUR_HANDLER, false);
+        return $this->get(self::RUN_PREVIOUS_HANDLER, true);
     }
 
     /**
      * @return int
      */
-    public function getErrorToLog(): int
+    public function getIgnoredErrorTypes(): int
     {
         return $this->get(
-            self::ERROR_TO_LOG,
-            E_ERROR & E_WARNING & E_PARSE & E_NOTICE & E_CORE_ERROR
-            & E_CORE_WARNING & E_COMPILE_ERROR & E_COMPILE_WARNING
-            & E_USER_ERROR & E_USER_WARNING & E_USER_NOTICE & E_STRICT
-            & E_RECOVERABLE_ERROR
+            self::IGNORE_ERROR_TYPES,
+            E_DEPRECATED & E_USER_DEPRECATED
         );
     }
 
@@ -53,8 +50,10 @@ class SentryConfig extends AbstractBundleConfig
     public function getClientConfig(): array
     {
         return $this->get(self::CLIENT_CONFIG, [
-            'environment' => getenv('APPLICATION_ENV'),
-            'store' => getenv('APPLICATION_STORE')
+            'tags' => [
+                'environment' => getenv('APPLICATION_ENV'),
+                'store' => getenv('APPLICATION_STORE')
+            ]
         ]);
     }
 }

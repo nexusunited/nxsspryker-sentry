@@ -51,12 +51,12 @@ class ErrorHandler extends AbstractPlugin implements NxsErrorHandlerPlugin
         int $errline,
         array $errcontext
     ): bool {
-        if (($errno & $this->getConfig()->getErrorToLog()) === 0) {
+        if (($errno & $this->getConfig()->getIgnoredErrorTypes()) === 0) {
             $exception = new \ErrorException($errstr, 0, $errno, $errfile, $errline);
             $this->getService()->captureException(
                 $exception,
                 [
-                    'extra' =>
+                    'tags' =>
                         [
                             'handler' => __CLASS__
                         ]

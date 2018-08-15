@@ -41,7 +41,7 @@ class ExceptionHandler extends AbstractPlugin implements NxsExceptionHandlerPlug
     {
         if (
             $throwable instanceof \ErrorException
-            && ($throwable->getSeverity() & $this->getConfig()->getErrorToLog()) === 0
+            && ($throwable->getSeverity() & $this->getConfig()->getIgnoredErrorTypes()) === 0
         ) {
             return;
         }
@@ -49,7 +49,7 @@ class ExceptionHandler extends AbstractPlugin implements NxsExceptionHandlerPlug
         $this->getService()->captureException(
             $throwable,
             [
-                'extra' =>
+                'tags' =>
                     [
                         'handler' => __CLASS__
                     ]

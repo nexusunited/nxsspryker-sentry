@@ -33,7 +33,7 @@ class ShutdownHandler extends AbstractPlugin implements NxsExceptionHandlerPlugi
     {
         $error = error_get_last();
 
-        if ($error === null || ($error['type'] & $this->getConfig()->getErrorToLog()) !== 0) {
+        if ($error === null || ($error['type'] & $this->getConfig()->getIgnoredErrorTypes()) !== 0) {
             return;
         }
 
@@ -48,7 +48,7 @@ class ShutdownHandler extends AbstractPlugin implements NxsExceptionHandlerPlugi
         $this->getService()->captureException(
             $exception,
             [
-                'extra' =>
+                'tags' =>
                     [
                         'handler' => __CLASS__
                     ]
