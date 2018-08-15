@@ -32,7 +32,7 @@ class SentryConfig extends AbstractBundleConfig
     {
         return $this->get(
             self::IGNORE_ERROR_TYPES,
-            E_DEPRECATED & E_USER_DEPRECATED
+            E_DEPRECATED | E_USER_DEPRECATED
         );
     }
 
