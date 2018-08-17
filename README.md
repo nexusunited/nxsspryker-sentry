@@ -35,4 +35,23 @@ $config[SentryConfig::CLIENT_URL] = sprintf(
     $config[SentryConfig::URL_DOMAIN],
     $config[SentryConfig::URL_PROJECT]
 );
+
+$config[SentryConstants::PUBLIC_CLIENT_KEY] = 'YOUR_SENTRY_PUBLIC_KEY';
+$config[SentryConstants::JS_CLIENT_URL] = sprintf(
+    'https://%s@%s/%s',
+    $config[SentryConstants::PUBLIC_CLIENT_KEY],
+    $config[SentryConfig::URL_DOMAIN],
+    $config[SentryConfig::URL_PROJECT]
+);
+```
+
+ - add the widget to your ShopApplicationDependencyProvider
+```
+Pyz\Yves\ShopApplication\ShopApplicationDependencyProvider
+SurveyWidgetPlugin::class
+```
+
+ - include in a globally used twig template (i.e. layout.twig)
+```
+{{ widgetGlobal('SentryWidgetPlugin') }}
 ```
