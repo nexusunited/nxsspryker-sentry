@@ -16,6 +16,7 @@ class SentryConfig extends AbstractBundleConfig
     public const CLIENT_CONFIG = 'sentry.client.config';
     public const IGNORE_ERROR_TYPES = 'sentry.ignore.error.types';
     public const RUN_PREVIOUS_HANDLER = 'sentry.run.previous.handler';
+    public const IS_ACTIVE = 'sentry.is.active';
 
     /**
      * @return bool
@@ -34,6 +35,14 @@ class SentryConfig extends AbstractBundleConfig
             self::IGNORE_ERROR_TYPES,
             E_DEPRECATED | E_USER_DEPRECATED
         );
+    }
+
+    /**
+     * @return bool
+     */
+    public function isActive(): bool
+    {
+        return $this->get(self::IS_ACTIVE,false);
     }
 
     /**

@@ -38,6 +38,7 @@ class SentryDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::SENTRY_CLIENT] = function (Container $container) {
             return new SentryClient(
+                $this->getConfig()->isActive(),
                 $this->getConfig()->getClientUrl(),
                 $this->getConfig()->getClientConfig(),
                 $this->getSentryClientPlugins($container)

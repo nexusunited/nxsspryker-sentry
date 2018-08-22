@@ -13,11 +13,10 @@ class SentryWidgetPlugin extends AbstractWidgetPlugin
 
     /**
      * @return void
-     *
-     * @throws \Spryker\Yves\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     public function initialize(): void
     {
+        $this->addParameter('sentryIsActive', $this->getConfig()->isJsClientActive());
         $this->addParameter('sentryUrl', $this->getConfig()->getJsClientUrl());
     }
 
