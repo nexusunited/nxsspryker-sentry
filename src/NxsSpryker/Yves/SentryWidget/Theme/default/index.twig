@@ -1,6 +1,6 @@
-{% if sentryIsActive === true %}
+{% if _widget.sentryIsActive == true %}
     <script src="https://cdn.ravenjs.com/3.26.4/raven.min.js" crossorigin="anonymous"></script>
     <script type="application/javascript">
-        Raven.config({{ _widget.sentryUrl }}).install();
+        Raven.config("{{ _widget.sentryUrl }}").install();
     </script>
 {% endif %}
